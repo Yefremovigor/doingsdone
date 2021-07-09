@@ -24,7 +24,8 @@ $show_complete_tasks = rand(0, 1);
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить
+                    задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__data">
@@ -72,7 +73,8 @@ $show_complete_tasks = rand(0, 1);
 
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <?=($show_complete_tasks) ? "checked" : "" ?>>
+                        <input class="checkbox__input visually-hidden show_completed"
+                               type="checkbox" <?= ($show_complete_tasks == 1) ? "checked" : "" ?>>
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
@@ -92,7 +94,7 @@ $show_complete_tasks = rand(0, 1);
 
                         <td class="task__date"></td>
                     </tr>
-                    <?php if ($show_complete_tasks): ?>
+                    <?php if ($show_complete_tasks == 1): ?>
                         <tr class="tasks__item task task--completed">
                             <td class="task__select">
                                 <label class="checkbox task__checkbox">
@@ -116,7 +118,8 @@ $show_complete_tasks = rand(0, 1);
             <p>© 2019, «Дела в порядке»</p>
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
-        </div>show_completed
+        </div>
+        show_completed
 
         <a class="main-footer__button button button--plus" href="pages/form-task.html">Добавить задачу</a>
 
