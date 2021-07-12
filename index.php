@@ -42,6 +42,17 @@ $tasks = [
         'done' => false
     ],
 ];
+
+function countTasksInCategory (array $tasks, string $category): int {
+    $counter = 0;
+    foreach ($tasks as $task) {
+        if ($task['category'] == $category) {
+            $counter++;
+        }
+    }
+
+    return $counter;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -87,7 +98,9 @@ $tasks = [
                         <?php foreach ($group as $value): ?>
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?=$value ?></a>
-                                <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count">
+                                    <?=countTasksInCategory($tasks, $value) ?>
+                                </span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
