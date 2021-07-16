@@ -4,8 +4,8 @@
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php foreach ($group as $value): ?>
-                <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($value['name']) ?></a>
+                <li class="main-navigation__list-item <?=($value['is_current'] == 1) ? 'main-navigation__list-item--active' : '' ?>">
+                    <a class="main-navigation__list-item-link" href="<?=$value['link'] ?>"><?=htmlspecialchars($value['name']) ?></a>
                     <span class="main-navigation__list-item-count">
                         <?=$value['tasks'] ?>
                     </span>
