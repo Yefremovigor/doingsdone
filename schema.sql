@@ -16,7 +16,7 @@ CREATE TABLE tasks (
     status TINYINT(1) DEFAULT 0,
     name CHAR(64) NOT NULL,
     file CHAR(255),
-    do_date DATETIME,
+    do_date DATE,
     user_id INT NOT NULL,
     project_id INT NOT NULL
 );

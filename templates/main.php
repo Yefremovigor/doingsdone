@@ -5,10 +5,10 @@
         <ul class="main-navigation__list">
             <?php foreach ($group as $value): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($value) ?></a>
+                    <a class="main-navigation__list-item-link" href="#"><?=htmlspecialchars($value['name']) ?></a>
                     <span class="main-navigation__list-item-count">
-                                    <?=countTasksInCategory($tasks, $value) ?>
-                                </span>
+                        <?=$value['tasks'] ?>
+                    </span>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -44,15 +44,15 @@
 
     <table class="tasks">
         <?php foreach ($tasks as $task): ?>
-            <?php if ($task['done'] && $show_complete_tasks === 0) {
+            <?php if ($task['status'] && $show_complete_tasks === 0) {
                 continue;
             }
             ?>
-            <tr class="tasks__item task <?=($task['done']) ? 'task--completed' : '' ?> <?=(isImportantTask($task['date'])) ? 'task--important' : '' ?>">
+            <tr class="tasks__item task <?=($task['status']) ? 'task--completed' : '' ?> <?=(isImportantTask($task['do_date'])) ? 'task--important' : '' ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"
-                            <?= ($task['done']) ? 'checked' : '' ?>>
+                            <?= ($task['status']) ? 'checked' : '' ?>>
                         <span class="checkbox__text"><?=htmlspecialchars($task['name']) ?></span>
                     </label>
                 </td>
@@ -61,7 +61,7 @@
                     <a class="download-link" href="#">Home.psd</a>
                 </td>
 
-                <td class="task__date"><?=$task['date'] ?></td>
+                <td class="task__date"><?=$task['do_date'] ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
