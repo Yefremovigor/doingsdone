@@ -10,31 +10,31 @@ if (!$con) {
     die();
 }
 else {
-    $groupSQL = "SELECT projects.id, projects.name, COUNT(tasks.id) AS tasks FROM projects 
+    $group_sql = "SELECT projects.id, projects.name, COUNT(tasks.id) AS tasks FROM projects 
 LEFT JOIN tasks on projects.id = tasks.project_id 
 WHERE projects.user_id = 1 GROUP BY projects.id ORDER BY tasks DESC";
-    $groupResult = mysqli_query($con, $groupSQL);
-    if (!$groupResult) {
+    $group_result = mysqli_query($con, $group_sql);
+    if (!$group_result) {
         $error = mysqli_error($con);
         print("Ошибка MySQL: " . $error);
         die();
     } else {
-        $group = mysqli_fetch_all($groupResult, MYSQLI_ASSOC);
+        $group = mysqli_fetch_all($group_result, MYSQLI_ASSOC);
     }
 
-    $currentProject = '';
+    $current_project = '';
     if (isset($_GET['project'])) {
-        $currentProject = 'AND `project_id` = ' . intval($_GET['project']);
+        $current_project = 'AND `project_id` = ' . intval($_GET['project']);
     }
 
-    $tasksSQL = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file FROM tasks  WHERE user_id = 1 $currentProject;";
-    $tasksResult = mysqli_query($con, $tasksSQL);
-    if (!$tasksResult) {
+    $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file FROM tasks  WHERE user_id = 1 $current_project;";
+    $tasks_result = mysqli_query($con, $tasks_sql);
+    if (!$tasks_result) {
         $error = mysqli_error($con);
         print("Ошибка MySQL: " . $error);
         die();
     } else {
-        $tasks = mysqli_fetch_all($tasksResult, MYSQLI_ASSOC);
+        $tasks = mysqli_fetch_all($tasks_result, MYSQLI_ASSOC);
     }
 }
 
@@ -45,7 +45,7 @@ if (isset($_GET['show_completed'])) {
    }
 }
 
-$scriptName = pathinfo( __FILE__, PATHINFO_BASENAME);
+$script_name = pathinfo( __FILE__, PATHINFO_BASENAME);
 
 foreach ($group as $key => $value) {
     $params = [];
@@ -65,27 +65,21 @@ foreach ($group as $key => $value) {
     }
 
     $query = http_build_query($params);
-    $group[$key]['link'] = "/" . $scriptName . "?" . $query;
+    $group[$key]['link'] = "/" . $script_name . "?" . $query;
 }
 
-if (count($tasks) > 0) {
-    $page_content = include_template('main.php', [
-        'group' => $group,
-        'show_complete_tasks' => $show_complete_tasks,
-        'tasks' => $tasks,
-    ]);
-} else {
+if (count($tasks) == 0) {
     http_response_code(404);
     print('Задача не найдена <br> <a href="/">Вернуться на главную</a>');
     die();
 }
-
 
 $page_content = include_template('main.php', [
     'group' => $group,
     'show_complete_tasks' => $show_complete_tasks,
     'tasks' => $tasks,
 ]);
+
 
 $layout_content = include_template('layout.php', [
     'title' => 'Дела в порядке',
