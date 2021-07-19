@@ -24,34 +24,46 @@
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-            <input class="form__input" type="text" name="name" id="name" value="" placeholder="Введите название">
-        </div>
-
-        <div class="form__row">
-            <label class="form__label" for="project">Проект <sup>*</sup></label>
-
-            <select class="form__input form__input--select" name="project" id="project">
-                <?php foreach ($group as $value): ?>
-                    <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
-                <?php endforeach; ?>
-            </select>
+            <input class="form__input <?=(isset($errors['name'])) ? 'form__input--error' : '' ?>" type="text" name="name" id="name" value="" placeholder="Введите название">
+            <p class="form__message">
+                <?=(isset($errors['name'])) ? $errors['name'] : '' ?>
+            </p>
         </div>
 
         <div class="form__row">
             <label class="form__label" for="date">Дата выполнения</label>
 
-            <input class="form__input form__input--date" type="text" name="date" id="date" value="" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <input class="form__input form__input--date <?=(isset($errors['date'])) ? 'form__input--error' : '' ?>" type="text" name="date" id="date" value="" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+            <p class="form__message">
+                <?=(isset($errors['date'])) ? $errors['date'] : '' ?>
+            </p>
+        </div>
+
+        <div class="form__row">
+            <label class="form__label" for="project">Проект <sup>*</sup></label>
+
+            <select class="form__input form__input--select <?=(isset($errors['project'])) ? 'form__input--error' : '' ?>" name="project" id="project">
+                <?php foreach ($group as $value): ?>
+                    <option value="<?=$value['id'] ?>"><?=$value['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="form__message">
+                <?=(isset($errors['project'])) ? $errors['project'] : '' ?>
+            </p>
         </div>
 
         <div class="form__row">
             <label class="form__label" for="file">Файл</label>
 
-            <div class="form__input-file">
+            <div class="form__input-file <?=(isset($errors['file'])) ? 'form__input--error' : '' ?>">
                 <input class="visually-hidden" type="file" name="file" id="file" value="">
 
                 <label class="button button--transparent" for="file">
                     <span>Выберите файл</span>
                 </label>
+                <p class="form__message">
+                    <?=(isset($errors['file'])) ? $errors['file'] : '' ?>
+                </p>
             </div>
         </div>
 
