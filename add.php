@@ -110,10 +110,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ]);
     } else {
 
+        $add_task_sql = "INSERT INTO tasks (name, user_id, project_id, status, do_date, file) VALUES ("
+            . mysqli_real_escape_string($con, $form['name'])
+            . ", " . "1"
+            . ", ''" . intval($form['project']) . "''"
+            . ", 0";
+
+        if (!empty($form['date'])) {
+            $add_task_sql .= ", '" . mysqli_real_escape_string($con, $form['date']) . "'";
+        }
+
+        if ($user_add_file) {
+            $add_task_sql .= ", '" . $new_file_name . "'";
+        }
+
+        $add_task_sql .= ')';
+
+        $add_task = mysqli_query($con, $add_task_sql);
+
         if ($user_add_file) {
             move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $new_file_name);
         }
-
 
         header('Location: /');
         exit();
