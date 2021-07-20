@@ -15,7 +15,8 @@ CREATE TABLE tasks (
     dt_add DATETIME DEFAULT NOW(),
     status TINYINT(1) DEFAULT 0,
     name CHAR(64) NOT NULL,
-    file CHAR(255),
+    file_name CHAR(255),
+    file_link CHAR(255),
     do_date DATE,
     user_id INT NOT NULL,
     project_id INT NOT NULL

@@ -27,7 +27,7 @@ WHERE projects.user_id = 1 GROUP BY projects.id ORDER BY tasks DESC";
         $current_project = 'AND `project_id` = ' . intval($_GET['project']);
     }
 
-    $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file FROM tasks  WHERE user_id = 1 $current_project;";
+    $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = 1 $current_project;";
     $tasks_result = mysqli_query($con, $tasks_sql);
     if (!$tasks_result) {
         $error = mysqli_error($con);

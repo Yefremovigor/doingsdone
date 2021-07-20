@@ -100,6 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $extension = $file_info->getExtension();
         $new_file_name = uniqid() . '.' . $extension;
 
+        $user_file_name = $file_info->getFilename();
+
         $user_add_file = 1;
     }
 
@@ -109,22 +111,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'errors' => $errors
         ]);
     } else {
-
-        $add_task_sql = "INSERT INTO tasks (name, user_id, project_id, status, do_date, file) VALUES ("
-            . mysqli_real_escape_string($con, $form['name'])
-            . ", " . "1"
-            . ", ''" . intval($form['project']) . "''"
-            . ", 0";
+//(name, user_id, project_id, status, do_date, file)
+        $add_task_sql = "INSERT INTO `tasks` SET"
+            . " `name` = '" . mysqli_real_escape_string($con, $form['name']) . "'"
+            . ", `user_id` = '" . 1 . "'"
+            . ", `project_id` = '" . intval($form['project']) . "'";
 
         if (!empty($form['date'])) {
-            $add_task_sql .= ", '" . mysqli_real_escape_string($con, $form['date']) . "'";
+            $add_task_sql .= ", `do_date` = '" . mysqli_real_escape_string($con, $form['date']) . "'";
         }
 
         if ($user_add_file) {
-            $add_task_sql .= ", '" . $new_file_name . "'";
+            $add_task_sql .= ", `file_link` = '" . $new_file_name . "'";
+            $add_task_sql .= ", `file_name` = '" . mysqli_real_escape_string($con, $user_file_name) . "'";
         }
-
-        $add_task_sql .= ')';
 
         $add_task = mysqli_query($con, $add_task_sql);
 
