@@ -9,27 +9,31 @@
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body>
+<body class="<?=!isset($user_name) ? 'body-background' : '' ?>">
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+    <div class="container <?=isset($user_name) ? 'container--with-sidebar' : '' ?>">
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить
-                    задачу</a>
+                <?php if(isset($user_name)): ?>
+                    <a class="main-header__side-item button button--plus open-modal" href="/add.php">Добавить
+                        задачу</a>
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__data">
-                        <p>Константин</p>
+                    <div class="main-header__side-item user-menu">
+                        <div class="user-menu__data">
+                            <p><?=$user_name ?></p>
 
-                        <a href="#">Выйти</a>
+                            <a href="/logout.php">Выйти</a>
+                        </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <a class="main-header__side-item button button--transparent" href="/auth.php">Войти</a>
+                <?php endif;?>
             </div>
         </header>
 
@@ -46,8 +50,9 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
-        <a class="main-footer__button button button--plus" href="pages/form-task.html">Добавить задачу</a>
+        <?php if(isset($user_name)): ?>
+            <a class="main-footer__button button button--plus" href="/add.php">Добавить задачу</a>
+        <?php endif; ?>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
