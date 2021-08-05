@@ -86,6 +86,7 @@ if (isset($_SESSION[user])) {
         'title' => 'Дела в порядке',
         'content' => $page_content,
         'user_name' => $user[name],
+        'sidebar' => 1,
     ]);
 } else {
     $page_content = include_template('guest.php', [
