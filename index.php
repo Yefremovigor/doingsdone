@@ -1,8 +1,8 @@
 <?php
 require_once('init.php');
 
-if (isset($_SESSION[user])) {
-    $user = $_SESSION[user];
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
     $group = [];
     $tasks = [];
     if (!$con) {
@@ -85,7 +85,7 @@ if (isset($_SESSION[user])) {
     $layout_content = include_template('layout.php', [
         'title' => 'Дела в порядке',
         'content' => $page_content,
-        'user_name' => $user[name],
+        'user_name' => $user['name'],
         'sidebar' => 1,
     ]);
 } else {
