@@ -54,14 +54,16 @@
                 <tr class="tasks__item task <?=($task['status']) ? 'task--completed' : '' ?> <?=(isImportantTask($task['do_date'])) ? 'task--important' : '' ?>">
                     <td class="task__select">
                         <label class="checkbox task__checkbox">
-                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"
+                            <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$task['id'] ?>"
                                 <?= ($task['status']) ? 'checked' : '' ?>>
                             <span class="checkbox__text"><?=htmlspecialchars($task['name']) ?></span>
                         </label>
                     </td>
 
                     <td class="task__file">
-                        <a class="download-link" href="#">Home.psd</a>
+                        <?php if (isset($task['file_link'])): ?>
+                            <a class="download-link" href="/uploads/<?=$task['file_link'] ?>"><?=$task['file_name'] ?></a>
+                        <?php endif; ?>
                     </td>
 
                     <td class="task__date"><?=$task['do_date'] ?></td>

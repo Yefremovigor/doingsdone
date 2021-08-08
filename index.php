@@ -9,8 +9,27 @@ if (isset($_SESSION['user'])) {
         $error = mysqli_connect_error();
         print("Ошибка MySQL: " . $error);
         die();
-    }
-    else {
+    } elseif (isset($_GET['task_id']) and isset($_GET['check'])) {
+        $task_id = intval($_GET['task_id']);
+        $check = intval($_GET['check']);
+
+        $get_task_info_sql = "SELECT `user_id` FROM tasks WHERE `id` = $task_id";
+        $get_task_info_result = mysqli_query($con, $get_task_info_sql);
+        if (!$get_task_info_result) {
+            $error = mysqli_error($con);
+            print("Ошибка MySQL: " . $error);
+            die();
+        }
+        $get_task_info = mysqli_fetch_all($get_task_info_result, MYSQLI_ASSOC);
+        $task_owner = $get_task_info[0]['user_id'];
+        if ($task_owner == $user['id']) {
+            $new_task_status_sql = "UPDATE `tasks` SET `status` = $check WHERE `id` = $task_id";
+            $new_task_status = mysqli_query($con, $new_task_status_sql);
+            header('Location: /');
+            exit();
+        }
+
+    } else {
         $group_sql = "SELECT projects.id, projects.name, COUNT(tasks.id) AS tasks FROM projects 
     LEFT JOIN tasks on projects.id = tasks.project_id 
     WHERE projects.user_id = $user[id] GROUP BY projects.id ORDER BY tasks DESC";
@@ -29,10 +48,10 @@ if (isset($_SESSION['user'])) {
         }
 
         if (empty($_GET['search'])) {
-            $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project;";
+            $tasks_sql = "SELECT id, name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project;";
         } else {
             $search_tasks = mysqli_real_escape_string($con, $_GET['search']);
-            $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] AND MATCH(name) AGAINST('$search_tasks' IN BOOLEAN MODE)";
+            $tasks_sql = "SELECT id, name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] AND MATCH(name) AGAINST('$search_tasks' IN BOOLEAN MODE)";
         }
 
 
