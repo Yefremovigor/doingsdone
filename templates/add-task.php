@@ -14,7 +14,7 @@
         </ul>
     </nav>
 
-    <a class="button button--transparent button--plus content__side-button" href="form-project.html">Добавить проект</a>
+    <a class="button button--transparent button--plus content__side-button" href="/add-project.php">Добавить проект</a>
 </section>
 
 <main class="content__main">
@@ -24,7 +24,7 @@
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
 
-            <input class="form__input <?=(isset($errors['name'])) ? 'form__input--error' : '' ?>" type="text" name="name" id="name" value="" placeholder="Введите название">
+            <input class="form__input <?=(isset($errors['name'])) ? 'form__input--error' : '' ?>" type="text" name="name" id="name" value="<?=(isset($form_data['name'])) ? htmlspecialchars($form_data['name']) : '' ?>" placeholder="Введите название">
             <p class="form__message">
                 <?=(isset($errors['name'])) ? $errors['name'] : '' ?>
             </p>

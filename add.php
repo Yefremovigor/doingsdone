@@ -1,22 +1,30 @@
 <?php
 require_once('init.php');
 
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+} else {
+    http_response_code(403);
+    header('Location: /auth.php');
+    exit();
+}
+
 $group = [];
 $user_add_file = 0;
 if (!$con) {
     $error = mysqli_connect_error();
     print("Ошибка MySQL: " . $error);
-    die();
+    exit();
 }
 else {
     $group_sql = "SELECT projects.id, projects.name, COUNT(tasks.id) AS tasks FROM projects 
 LEFT JOIN tasks on projects.id = tasks.project_id 
-WHERE projects.user_id = 1 GROUP BY projects.id ORDER BY projects.name ASC";
+WHERE projects.user_id = " . $user['id'] . " GROUP BY projects.id ORDER BY projects.name ASC";
     $group_result = mysqli_query($con, $group_sql);
     if (!$group_result) {
         $error = mysqli_error($con);
         print("Ошибка MySQL: " . $error);
-        die();
+        exit();
     } else {
         $group = mysqli_fetch_all($group_result, MYSQLI_ASSOC);
     }
@@ -114,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //(name, user_id, project_id, status, do_date, file)
         $add_task_sql = "INSERT INTO `tasks` SET"
             . " `name` = '" . mysqli_real_escape_string($con, $form['name']) . "'"
-            . ", `user_id` = '" . 1 . "'"
+            . ", `user_id` = '" . $user['id'] . "'"
             . ", `project_id` = '" . intval($form['project']) . "'";
 
         if (!empty($form['date'])) {
@@ -145,6 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $layout_content = include_template('layout.php', [
     'title' => 'Дела в порядке',
     'content' => $page_content,
+    'user_name' => $user['name'],
+    'sidebar' => 1,
 ]);
 
 print($layout_content);
