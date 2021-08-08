@@ -32,3 +32,5 @@ CREATE UNIQUE INDEX users_email ON users (email);
 CREATE INDEX projects_name ON projects (name);
 CREATE INDEX project_creator ON projects (user_id);
 CREATE INDEX task_creator ON tasks (user_id);
+
+CREATE FULLTEXT INDEX task_name ON tasks(name);

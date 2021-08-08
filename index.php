@@ -28,7 +28,14 @@ if (isset($_SESSION['user'])) {
             $current_project = 'AND `project_id` = ' . intval($_GET['project']);
         }
 
-        $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project;";
+        if (empty($_GET['search'])) {
+            $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project;";
+        } else {
+            $search_tasks = mysqli_real_escape_string($con, $_GET['search']);
+            $tasks_sql = "SELECT name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] AND MATCH(name) AGAINST('$search_tasks' IN BOOLEAN MODE)";
+        }
+
+
         $tasks_result = mysqli_query($con, $tasks_sql);
         if (!$tasks_result) {
             $error = mysqli_error($con);
