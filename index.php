@@ -47,8 +47,26 @@ if (isset($_SESSION['user'])) {
             $current_project = 'AND `project_id` = ' . intval($_GET['project']);
         }
 
+        $time_filter = '';
+
+        if (isset($_GET['time-filter']) && $_GET['time-filter'] !== '') {
+            switch ($_GET['time-filter']) {
+                case 'today':
+                    $time_filter = " AND DATE(do_date) = CURDATE()";
+                    break;
+                case 'tomorrow':
+                    $time_filter = ' AND DATE(do_date) = CURDATE() + 1';
+                    break;
+                case 'expired':
+                    $time_filter = ' AND DATE(do_date) < CURDATE()';
+                    break;
+                default:
+                    break;
+            }
+        }
+
         if (empty($_GET['search'])) {
-            $tasks_sql = "SELECT id, name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project;";
+            $tasks_sql = "SELECT id, name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] $current_project $time_filter";
         } else {
             $search_tasks = mysqli_real_escape_string($con, $_GET['search']);
             $tasks_sql = "SELECT id, name, project_id, status, DATE_FORMAT(do_date, '%d.%m.%Y') AS do_date, file_name, file_link FROM tasks  WHERE user_id = $user[id] AND MATCH(name) AGAINST('$search_tasks' IN BOOLEAN MODE)";
