@@ -85,12 +85,12 @@ if (isset($_SESSION['user'])) {
 
     $show_complete_tasks = 0;
     if (isset($_GET['show_completed'])) {
-       if ($_GET['show_completed'] == 1) {
-           $show_complete_tasks = 1;
-       }
+        if ($_GET['show_completed'] == 1) {
+            $show_complete_tasks = 1;
+        }
     }
 
-    $script_name = pathinfo( __FILE__, PATHINFO_BASENAME);
+    $script_name = pathinfo(__FILE__, PATHINFO_BASENAME);
 
     foreach ($group as $key => $value) {
         $params = [];

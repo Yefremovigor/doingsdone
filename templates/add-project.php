@@ -4,10 +4,11 @@
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php foreach ($group as $value): ?>
-                <li class="main-navigation__list-item <?=($value['is_current'] == 1) ? 'main-navigation__list-item--active' : '' ?>">
-                    <a class="main-navigation__list-item-link" href="<?=$value['link'] ?>"><?=htmlspecialchars($value['name']) ?></a>
+                <li class="main-navigation__list-item <?= ($value['is_current'] == 1) ? 'main-navigation__list-item--active' : '' ?>">
+                    <a class="main-navigation__list-item-link"
+                       href="<?= $value['link'] ?>"><?= htmlspecialchars($value['name']) ?></a>
                     <span class="main-navigation__list-item-count">
-                        <?=$value['tasks'] ?>
+                        <?= $value['tasks'] ?>
                     </span>
                 </li>
             <?php endforeach; ?>
@@ -20,13 +21,16 @@
 <main class="content__main">
     <h2 class="content__main-heading">Добавление проекта</h2>
 
-    <form class="form"  action="/add-project.php" method="post" autocomplete="off">
+    <form class="form" action="/add-project.php" method="post" autocomplete="off">
         <div class="form__row">
             <label class="form__label" for="project_name">Название <sup>*</sup></label>
 
-            <input class="form__input <?=(isset($errors['name'])) ? 'form__input--error' : '' ?>" type="text" name="name" id="project_name" value="<?=(isset($form_data['name'])) ? htmlspecialchars($form_data['name']) : '' ?>" placeholder="Введите название проекта">
+            <input class="form__input <?= (isset($errors['name'])) ? 'form__input--error' : '' ?>" type="text"
+                   name="name" id="project_name"
+                   value="<?= (isset($form_data['name'])) ? htmlspecialchars($form_data['name']) : '' ?>"
+                   placeholder="Введите название проекта">
             <p class="form__message">
-                <?=(isset($errors['name'])) ? $errors['name'] : '' ?>
+                <?= (isset($errors['name'])) ? $errors['name'] : '' ?>
             </p>
         </div>
 

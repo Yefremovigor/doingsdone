@@ -21,7 +21,7 @@ function isImportantTask($do_date): bool
     if (isset($do_date) && $do_date != '') {
         $today = strtotime('today');
         $do_date = strtotime($do_date);
-        return ($do_date - $today) < 60*60*24;
+        return ($do_date - $today) < 60 * 60 * 24;
     }
 
     return false;

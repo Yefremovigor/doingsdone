@@ -39,10 +39,10 @@ if ($res && mysqli_num_rows($res)) {
         if (count($letter['user_tasks']) > 1) {
             $planed = "У вас запланированы задачи:" . PHP_EOL;
             foreach ($letter['user_tasks'] as $task) {
-                $planed .= '"' . $task['task_name'] . '" на '  . $task['do_date'] . PHP_EOL;
+                $planed .= '"' . $task['task_name'] . '" на ' . $task['do_date'] . PHP_EOL;
             }
         } else {
-            $planed .= '"' . $letter['user_tasks'][0]['task_name'] . '" на '  . $letter['user_tasks'][0]['do_date'];
+            $planed .= '"' . $letter['user_tasks'][0]['task_name'] . '" на ' . $letter['user_tasks'][0]['do_date'];
         }
 
         $text = "Уважаемый, $name. $planed";

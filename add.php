@@ -15,8 +15,7 @@ if (!$con) {
     $error = mysqli_connect_error();
     print("Ошибка MySQL: " . $error);
     exit();
-}
-else {
+} else {
     $group_sql = "SELECT projects.id, projects.name, COUNT(tasks.id) AS tasks FROM projects 
 LEFT JOIN tasks on projects.id = tasks.project_id 
 WHERE projects.user_id = " . $user['id'] . " GROUP BY projects.id ORDER BY projects.name ASC";
@@ -35,7 +34,7 @@ WHERE projects.user_id = " . $user['id'] . " GROUP BY projects.id ORDER BY proje
     }
 }
 
-$scriptName = pathinfo( __FILE__, PATHINFO_BASENAME);
+$scriptName = pathinfo(__FILE__, PATHINFO_BASENAME);
 
 foreach ($group as $key => $value) {
     $params = [];
@@ -67,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($form['name'])) {
         $errors['name'] = 'Заполните название задачи';
-    } elseif ($form['name'] >=5 && $form['name'] <= 64) {
+    } elseif ($form['name'] >= 5 && $form['name'] <= 64) {
         $errors['name'] = 'Название задачи должно быть длинной от 5 до 64 символов';
     }
 

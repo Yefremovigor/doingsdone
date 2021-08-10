@@ -1,17 +1,17 @@
 {
-    "name": "yefremovigor/doingsdone",
-    "require": {
-        "swiftmailer/swiftmailer": "^6.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "Yefremovigor\\Doingsdone\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Игорь",
-            "email": "Yefremovigor@yandex.ru"
-        }
-    ]
+  "name": "yefremovigor/doingsdone",
+  "require": {
+    "swiftmailer/swiftmailer": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yefremovigor\\Doingsdone\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Игорь",
+      "email": "Yefremovigor@yandex.ru"
+    }
+  ]
 }
